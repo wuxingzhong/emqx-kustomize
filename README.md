@@ -42,7 +42,7 @@ bases:
 kubectl apply -k .
 ```
 
-# Generate yaml
+# Generates yaml
 
 ```bash
 kubectl kustomize https://github.com/wuxingzhong/emqx-kustomize/overlays/example
