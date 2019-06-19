@@ -80,15 +80,15 @@ spec:
             limits:
               memory: "3096Mi"
               cpu: "1800m" 
-          dnsConfig:
-            options:
-            - name: timeout
-              value: "2"
-            - name: attempts
-              value: "3"
-            - name: single-request-reopen                               
-          volumes:
-            - name: emqx-certs
-              secret:
-                secretName: emqx-certs
-                defaultMode: 0777                
+      dnsConfig:
+        options:
+        - name: timeout
+          value: "2"
+        - name: attempts
+          value: "3"
+        - name: single-request-reopen                               
+      volumes:
+        - name: emqx-certs
+          secret:
+            secretName: emqx-certs
+            defaultMode: 0777                
