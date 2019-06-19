@@ -29,21 +29,9 @@ spec:
             containerPort: 8084
           - name: dashboard
             containerPort: 18083
-          env:
-          - name: EMQX_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.labels.app
-          - name: EMQX_CLUSTER__K8S__APP_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.labels.app
+          env:        
           - name: EMQX_CLUSTER__DISCOVERY
-            value: k8s 
-          - name: EMQX_CLUSTER__K8S__SERVICE_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.labels.app
+            value: k8s
           - name: EMQX_CLUSTER__K8S__NAMESPACE
             valueFrom:
               fieldRef:

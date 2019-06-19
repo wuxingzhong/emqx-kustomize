@@ -13,6 +13,8 @@ This repo bootstraps an emqx deployment on a Kubernetes cluster using the Kustom
 
 ```bash
 git clone https://github.com/wuxingzhong/emqx-kustomize.git
+
+kubectl create namespace example
 kubectl apply -k emqx-kustomize/overlays/example
 # or
 kubectl apply -k https://github.com/wuxingzhong/emqx-kustomize/overlays/example
