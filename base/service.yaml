@@ -1,0 +1,33 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: emqx
+spec:
+  selector:
+    app: emqx
+  type: ClusterIP 
+  ports:
+  - name: mqtt
+    port: 1883 
+    protocol: TCP
+    targetPort: 1883
+  - name: mqttssl
+    port: 8883
+    protocol: TCP
+    targetPort: 8883
+  - name: mgmt
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: websocket
+    port: 8083
+    protocol: TCP
+    targetPort: 8083
+  - name: wss
+    port: 8084
+    protocol: TCP
+    targetPort: 8084
+  - name: dashboard
+    port: 18083
+    protocol: TCP
+    targetPort: 18083

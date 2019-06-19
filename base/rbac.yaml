@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: emqx
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: emqx
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - endpoints 
+  verbs: 
+  - get
+  - watch
+  - list
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: emqx
+subjects:
+  - kind: ServiceAccount
+    name: emqx
+roleRef:
+  kind: Role
+  name: emqx
+  apiGroup: rbac.authorization.k8s.io

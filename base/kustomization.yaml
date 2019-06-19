@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+commonLabels:
+  app: emqx
+resources:
+- rbac.yaml
+- deployment.yaml
+- service.yaml
+
+configMapGenerator:
+- name: emqx-env
+  env: emqx.env
+secretGenerator:
+- name: emqx-certs
+  files:
+  - certs/cacert.pem
+  - certs/cert.pem
+  - certs/client-cert.pem
+  - certs/client-key.pem 
+  - certs/key.pem
+  type: Opaque
+generatorOptions:
+  disableNameSuffixHash: true
+  

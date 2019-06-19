@@ -1,0 +1,94 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: emqx
+  labels:
+    app: emqx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: emqx
+  template:
+    spec:
+      serviceAccountName: emqx
+      containers:
+        - name: emqx
+          image: emqx/emqx:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+          - name: mqtt
+            containerPort: 1883
+          - name: mqttssl
+            containerPort: 8883
+          - name: mgmt
+            containerPort: 8080
+          - name: websocket
+            containerPort: 8083
+          - name: wss 
+            containerPort: 8084
+          - name: dashboard
+            containerPort: 18083
+          env:
+          - name: EMQX_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels.app
+          - name: EMQX_CLUSTER__K8S__APP_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels.app
+          - name: EMQX_CLUSTER__DISCOVERY
+            value: k8s 
+          - name: EMQX_CLUSTER__K8S__SERVICE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels.app
+          - name: EMQX_CLUSTER__K8S__NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: EMQX_CLUSTER__K8S__ADDRESS_TYPE
+            value: ip
+          - name: EMQX_CLUSTER__K8S__APISERVER
+            value: https://kubernetes.default.svc:443
+          - name: TZ
+            value: "Asia/Shanghai"
+          envFrom:
+            - configMapRef:
+                name: emqx-env
+          tty: true                
+          livenessProbe:
+            tcpSocket:
+              port: mqtt
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            failureThreshold: 5
+          readinessProbe:
+            tcpSocket:
+              port: mqtt
+            initialDelaySeconds: 5
+            periodSeconds: 10            
+          volumeMounts:    
+          - name: emqx-certs
+            mountPath: /opt/emqx/etc/certs/
+            readOnly: true
+          resources:
+            requests:
+              memory: "1024Mi"
+              cpu: "600m"
+            limits:
+              memory: "3096Mi"
+              cpu: "1800m" 
+          dnsConfig:
+            options:
+            - name: timeout
+              value: "2"
+            - name: attempts
+              value: "3"
+            - name: single-request-reopen                               
+          volumes:
+            - name: emqx-certs
+              secret:
+                secretName: emqx-certs
+                defaultMode: 0777                
