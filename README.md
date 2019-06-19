@@ -1,2 +1,7 @@
 # emqx-kustomize
-kustomize
+
+## usage
+
+```bash
+kubectl apply -k emqx-kustomize
+```
