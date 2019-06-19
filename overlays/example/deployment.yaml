@@ -8,5 +8,5 @@ spec:
     spec:
       containers:
         - name: emqx
-          image: emqx/emqx:v3.1.2
+          image: emqx/emqx:latest
           resources: {}
