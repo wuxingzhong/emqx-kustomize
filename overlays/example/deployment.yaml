@@ -1,0 +1,12 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: emqx
+spec:
+  replicas: 6
+  template:
+    spec:
+      containers:
+        - name: emqx
+          image: emqx/emqx:v3.1.2
+          resources: {}
