@@ -20,7 +20,7 @@ kubectl apply -k emqx-kustomize/overlays/example
 kubectl apply -k https://github.com/wuxingzhong/emqx-kustomize/overlays/example
 ```
 
-## custom
+## Custom
 
 ```bash
 
